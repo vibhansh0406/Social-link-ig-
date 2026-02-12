@@ -23,6 +23,8 @@
             box-sizing: border-box;
             -webkit-font-smoothing: antialiased;
             cursor: none !important;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
         }
 
         body {
@@ -31,18 +33,26 @@
             font-family: 'Space Grotesk', sans-serif;
             overflow: hidden;
             height: 100vh;
+            position: fixed;
+            width: 100%;
         }
 
         /* Scanline Overlay */
         body::before {
             content: " ";
             display: block;
-            position: absolute;
+            position: fixed;
             top: 0; left: 0; bottom: 0; right: 0;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
             z-index: 100;
             background-size: 100% 3px, 3px 100%;
             pointer-events: none;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
         }
 
         #canvas-container {
@@ -50,6 +60,12 @@
             inset: 0;
             z-index: 0;
             pointer-events: none;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
         }
 
         /* Cursor System */
@@ -62,6 +78,13 @@
             pointer-events: none;
             z-index: 10000;
             mix-blend-mode: difference;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: pulse-cursor 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-cursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
         #cursor-ring {
@@ -73,13 +96,15 @@
             pointer-events: none;
             z-index: 9999;
             transition: transform 0.1s ease-out;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
         }
 
         .viewport {
             position: relative;
             z-index: 10;
             height: 100vh;
-            overflow-y: auto;
+            overflow-y: scroll;
+            overflow-x: hidden;
             scroll-behavior: smooth;
             padding: 4rem 1.5rem;
             scrollbar-width: none;
@@ -87,7 +112,7 @@
 
         .viewport::-webkit-scrollbar { display: none; }
 
-        /* V-Logo Morph */
+        /* V-Logo Morph - Enhanced */
         .logo-mark {
             position: relative;
             width: 80px;
@@ -96,6 +121,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
         }
 
         .logo-ring {
@@ -104,14 +135,33 @@
             border: 1.5px solid rgba(255,255,255,0.15);
             border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
             animation: morph 6s infinite ease-in-out;
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
         }
 
         @keyframes morph {
-            0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; transform: rotate(0deg); }
-            50% { border-radius: 50%; transform: rotate(180deg); }
+            0%, 100% { 
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; 
+                transform: rotate(0deg);
+                box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
+            }
+            50% { 
+                border-radius: 50%; 
+                transform: rotate(180deg);
+                box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.1);
+            }
         }
 
-        /* Link Buttons */
+        .logo-mark span {
+            animation: spin-logo 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes spin-logo {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Link Buttons - Enhanced */
         .link-button {
             background: var(--card-bg);
             backdrop-filter: blur(20px);
@@ -130,7 +180,25 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+            animation: slideUp 0.8s ease-out backwards;
         }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .link-button:nth-child(1) { animation-delay: 0.1s; }
+        .link-button:nth-child(2) { animation-delay: 0.2s; }
+        .link-button:nth-child(3) { animation-delay: 0.3s; }
+        .link-button:nth-child(4) { animation-delay: 0.4s; }
+        .link-button:nth-child(5) { animation-delay: 0.5s; }
 
         .link-button:hover {
             background: rgba(255, 255, 255, 0.1);
@@ -156,6 +224,21 @@
             left: 100%;
         }
 
+        /* Ambient glow effect */
+        .link-button::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.1), transparent 80%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .link-button:hover::after {
+            opacity: 1;
+        }
+
         .btn-icon {
             width: 46px;
             height: 46px;
@@ -168,12 +251,26 @@
             margin-right: 1.1rem;
             border: 1px solid rgba(255,255,255,0.1);
             transition: 0.3s ease;
+            flex-shrink: 0;
+            animation: bounce 2s ease-in-out infinite;
         }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .btn-icon:nth-child(1) { animation-delay: 0s; }
+        .btn-icon:nth-child(2) { animation-delay: 0.2s; }
+        .btn-icon:nth-child(3) { animation-delay: 0.4s; }
+        .btn-icon:nth-child(4) { animation-delay: 0.6s; }
+        .btn-icon:nth-child(5) { animation-delay: 0.8s; }
 
         .link-button:hover .btn-icon {
             background: #fff;
             color: #000;
             transform: scale(1.1) rotate(-5deg);
+            animation: none;
         }
 
         .link-button:active .btn-icon {
@@ -195,54 +292,120 @@
             opacity: 0.4;
             text-transform: uppercase;
             letter-spacing: 2px;
+            transition: opacity 0.3s ease;
+        }
+
+        .link-button:hover .btn-text-sub {
+            opacity: 0.6;
+        }
+
+        /* Header Animation */
+        header {
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            animation: glitch 0.3s ease-in-out 0.5s, glow 2s ease-in-out 1s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { text-shadow: none; }
+            50% { text-shadow: 2px 2px 0 rgba(255, 0, 0, 0.5), -2px -2px 0 rgba(0, 255, 255, 0.5); }
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+            50% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
+        }
+
+        /* Footer Animation */
+        footer {
+            animation: fadeInUp 0.8s ease-out 0.7s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Mobile/Tablet Responsive */
         @media (max-width: 768px) {
             #cursor-dot, #cursor-ring { display: none; }
             * { cursor: auto !important; }
-            h1 { font-size: 3rem !important; }
+            
+            h1 { 
+                font-size: 3rem !important;
+                animation: fadeInDown 0.8s ease-out;
+            }
+            
             .viewport { 
                 padding: 3rem 1rem;
-                height: auto;
-                min-height: 100vh;
-                overflow-y: auto;
+                height: 100vh;
             }
+
             body {
-                overflow: auto;
-                height: auto;
-                min-height: 100vh;
+                position: fixed;
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            .viewport {
+                overflow-y: scroll;
             }
         }
 
         @media (max-width: 480px) {
             h1 { font-size: 2.2rem !important; }
             .viewport { padding: 2rem 1rem; }
+            
             .logo-mark {
                 width: 60px;
                 height: 60px;
                 margin-bottom: 1rem;
             }
+
             header { margin-bottom: 2rem; }
+
             .link-button {
                 padding: 0.9rem 1.1rem;
                 border-radius: 16px;
                 margin-bottom: 0.8rem;
             }
+
             .btn-icon {
                 width: 40px;
                 height: 40px;
                 font-size: 1.1rem;
                 margin-right: 0.8rem;
             }
+
             .btn-text-main {
                 font-size: 0.6rem;
                 letter-spacing: 2px;
             }
+
             .btn-text-sub {
                 font-size: 8px;
                 letter-spacing: 1px;
             }
+
             .opacity-20 { opacity: 0.15 !important; }
         }
 
@@ -255,6 +418,61 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+        }
+
+        /* Gradient Background Animation */
+        #canvas-container {
+            background: linear-gradient(45deg, #0a0e27, #050505, #0a0e27);
+            background-size: 400% 400%;
+            animation: gradient-shift 15s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Particle effect on buttons */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float-particle 3s linear infinite;
+        }
+
+        @keyframes float-particle {
+            0% {
+                opacity: 0;
+                transform: translateY(0) translateX(0);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) translateX(50px);
+            }
+        }
+
+        /* Smooth scroll enhancement */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Active link indicator */
+        .link-button.active {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.8);
         }
     </style>
 </head>
@@ -322,7 +540,7 @@
                 <div class="opacity-20 text-xs">MAIL ↗</div>
             </a>
 
-            <!-- 5. Neural Portfolio / Projects (New Suggestion) -->
+            <!-- 5. Neural Portfolio / Projects -->
             <a href="#" class="link-button magnetic" data-color="#00f3ff">
                 <div class="btn-icon">🧬</div>
                 <div class="flex-1">
@@ -340,19 +558,25 @@
                 </span>
             </div>
             <p class="text-[8px] tracking-[8px] uppercase">Crafted by Vibhansh &copy; 2026</p>
-        </footer >
+        </footer>
     </div>
 
     <script>
-        // 3D Scene Setup - Works on ALL devices
+        // Performance optimization
+        const isDesktop = window.innerWidth > 1024;
+        const isMobile = window.innerWidth < 768;
+
+        // 3D Scene Setup - Optimized for all devices
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" });
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+        
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // Lower pixel ratio for mobile
+        renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
         document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-        // Geometries
+        // Geometries with enhanced visuals
         const mainObj = new THREE.Mesh(
             new THREE.IcosahedronGeometry(6, 2),
             new THREE.MeshNormalMaterial({ wireframe: true, transparent: true, opacity: 0.08 })
@@ -365,32 +589,40 @@
         );
         scene.add(innerObj);
 
+        // Additional rotating elements
+        const orbitGeom = new THREE.TorusGeometry(8, 0.1, 16, 100);
+        const orbitMat = new THREE.MeshNormalMaterial({ wireframe: true, transparent: true, opacity: 0.05 });
+        const orbit = new THREE.Mesh(orbitGeom, orbitMat);
+        scene.add(orbit);
+
         camera.position.z = 15;
 
-        // Interaction
+        // Mouse interaction
         const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
         const cursorDot = document.getElementById('cursor-dot');
         const cursorRing = document.getElementById('cursor-ring');
 
-        // Desktop Mouse Movement
-        window.addEventListener('mousemove', (e) => {
+        // Enhanced cursor tracking
+        document.addEventListener('mousemove', (e) => {
             mouse.targetX = (e.clientX / window.innerWidth - 0.5) * 2;
             mouse.targetY = (e.clientY / window.innerHeight - 0.5) * 2;
             
-            gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0.1 });
-            gsap.to(cursorRing, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.4 });
+            if (isDesktop) {
+                gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0.1 });
+                gsap.to(cursorRing, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.4 });
+            }
         });
 
-        // Mobile/Tablet Touch Movement
-        window.addEventListener('touchmove', (e) => {
+        // Continuous animation on mobile/tablet
+        document.addEventListener('touchmove', (e) => {
             const touch = e.touches[0];
             mouse.targetX = (touch.clientX / window.innerWidth - 0.5) * 2;
             mouse.targetY = (touch.clientY / window.innerHeight - 0.5) * 2;
         }, { passive: true });
 
-        // Magnetic Effect for Desktop & Mobile
-        document.querySelectorAll('.magnetic').forEach(btn => {
-            // Desktop Mouse Events
+        // Enhanced magnetic effect for all devices
+        document.querySelectorAll('.magnetic').forEach((btn, index) => {
+            // Desktop mouse events
             btn.addEventListener('mousemove', (e) => {
                 const rect = btn.getBoundingClientRect();
                 const x = (e.clientX - rect.left - rect.width/2) * 0.2;
@@ -402,41 +634,95 @@
             btn.addEventListener('mouseleave', () => {
                 gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
                 gsap.to(cursorRing, { scale: 1, borderColor: "rgba(255,255,255,0.4)", duration: 0.3 });
+                btn.classList.remove('active');
             });
 
-            // Mobile/Tablet Touch Events
+            // Mobile/Tablet touch events with continuous animation
             btn.addEventListener('touchstart', (e) => {
+                btn.classList.add('active');
                 gsap.to(btn, { scale: 0.95, duration: 0.2 });
+                // Continuous rotation animation
+                gsap.to(mainObj.rotation, { y: mainObj.rotation.y + Math.PI * 2, duration: 2, repeat: -1 });
             });
 
             btn.addEventListener('touchend', (e) => {
                 gsap.to(btn, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.3)" });
+                btn.classList.remove('active');
+            });
+
+            // Hover state for desktop
+            btn.addEventListener('mouseenter', () => {
+                btn.classList.add('active');
             });
         });
 
+        // Main animation loop
         function animate() {
             requestAnimationFrame(animate);
+            
+            // Continuous rotations
             mainObj.rotation.y += 0.0015;
             mainObj.rotation.x += (mouse.targetY * 0.3 - mainObj.rotation.x) * 0.05;
             mainObj.rotation.y += (mouse.targetX * 0.3 - mainObj.rotation.y) * 0.05;
+            
             innerObj.rotation.y -= 0.003;
+            innerObj.rotation.x += 0.0005;
+            
+            orbit.rotation.z += 0.002;
+            orbit.rotation.x += 0.0008;
+
+            // Continuous pulsing
+            const time = Date.now() * 0.001;
+            mainObj.position.z = Math.sin(time * 0.5) * 0.5;
+            
             renderer.render(scene, camera);
         }
 
-        window.onload = () => {
-            gsap.to("#loader-progress", { width: "100%", duration: 1.2, ease: "power4.inOut", onComplete: () => {
-                gsap.to("#loader", { opacity: 0, duration: 0.6, onComplete: () => {
-                    document.getElementById('loader').style.display = 'none';
-                    animate();
-                }});
-            }});
-        };
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+        // Loader animation
+        window.addEventListener('load', () => {
+            gsap.to("#loader-progress", { 
+                width: "100%", 
+                duration: 1.5, 
+                ease: "power4.inOut", 
+                onComplete: () => {
+                    gsap.to("#loader", { 
+                        opacity: 0, 
+                        duration: 0.8,
+                        onComplete: () => {
+                            document.getElementById('loader').style.display = 'none';
+                            animate();
+                        }
+                    });
+                }
+            });
         });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
+        });
+
+        // Viewport scroll optimization
+        let scrollTimeout;
+        document.querySelector('.viewport').addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                // Keep animations smooth during scroll
+            }, 150);
+        }, { passive: true });
+
+        // Prevent layout shift
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Start animation immediately after setup
+        animate();
     </script>
 </body>
 </html>

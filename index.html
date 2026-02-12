@@ -139,6 +139,10 @@
             box-shadow: 0 20px 40px -15px rgba(0,0,0,0.7);
         }
 
+        .link-button:active {
+            transform: translateY(-2px) scale(1.01);
+        }
+
         .link-button::before {
             content: '';
             position: absolute;
@@ -172,6 +176,10 @@
             transform: scale(1.1) rotate(-5deg);
         }
 
+        .link-button:active .btn-icon {
+            transform: scale(0.95);
+        }
+
         .btn-text-main {
             font-family: 'Syncopate', sans-serif;
             font-size: 0.65rem;
@@ -189,11 +197,53 @@
             letter-spacing: 2px;
         }
 
+        /* Mobile/Tablet Responsive */
         @media (max-width: 768px) {
             #cursor-dot, #cursor-ring { display: none; }
             * { cursor: auto !important; }
             h1 { font-size: 3rem !important; }
-            .viewport { padding: 3rem 1rem; }
+            .viewport { 
+                padding: 3rem 1rem;
+                height: auto;
+                min-height: 100vh;
+                overflow-y: auto;
+            }
+            body {
+                overflow: auto;
+                height: auto;
+                min-height: 100vh;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2.2rem !important; }
+            .viewport { padding: 2rem 1rem; }
+            .logo-mark {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 1rem;
+            }
+            header { margin-bottom: 2rem; }
+            .link-button {
+                padding: 0.9rem 1.1rem;
+                border-radius: 16px;
+                margin-bottom: 0.8rem;
+            }
+            .btn-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+                margin-right: 0.8rem;
+            }
+            .btn-text-main {
+                font-size: 0.6rem;
+                letter-spacing: 2px;
+            }
+            .btn-text-sub {
+                font-size: 8px;
+                letter-spacing: 1px;
+            }
+            .opacity-20 { opacity: 0.15 !important; }
         }
 
         #loader {
@@ -243,7 +293,7 @@
             </a>
 
             <!-- 2. Discord Direct Account -->
-            <a href="discord.com/users/1447527365277384786" target="_blank" class="link-button magnetic" data-color="#5865F2">
+            <a href="https://discord.com/users/1447527365277384786" target="_blank" class="link-button magnetic" data-color="#5865F2">
                 <div class="btn-icon">👾</div>
                 <div class="flex-1">
                     <span class="btn-text-main">Discord</span>
@@ -294,12 +344,12 @@
     </div>
 
     <script>
-        // 3D Scene Setup
+        // 3D Scene Setup - Works on ALL devices
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // Lower pixel ratio for mobile
         document.getElementById('canvas-container').appendChild(renderer.domElement);
 
         // Geometries
@@ -322,6 +372,7 @@
         const cursorDot = document.getElementById('cursor-dot');
         const cursorRing = document.getElementById('cursor-ring');
 
+        // Desktop Mouse Movement
         window.addEventListener('mousemove', (e) => {
             mouse.targetX = (e.clientX / window.innerWidth - 0.5) * 2;
             mouse.targetY = (e.clientY / window.innerHeight - 0.5) * 2;
@@ -330,8 +381,16 @@
             gsap.to(cursorRing, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.4 });
         });
 
-        // Magnetic Effect
+        // Mobile/Tablet Touch Movement
+        window.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            mouse.targetX = (touch.clientX / window.innerWidth - 0.5) * 2;
+            mouse.targetY = (touch.clientY / window.innerHeight - 0.5) * 2;
+        }, { passive: true });
+
+        // Magnetic Effect for Desktop & Mobile
         document.querySelectorAll('.magnetic').forEach(btn => {
+            // Desktop Mouse Events
             btn.addEventListener('mousemove', (e) => {
                 const rect = btn.getBoundingClientRect();
                 const x = (e.clientX - rect.left - rect.width/2) * 0.2;
@@ -339,9 +398,19 @@
                 gsap.to(btn, { x: x, y: y, duration: 0.4 });
                 gsap.to(cursorRing, { scale: 1.5, borderColor: btn.dataset.color, duration: 0.3 });
             });
+            
             btn.addEventListener('mouseleave', () => {
                 gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
                 gsap.to(cursorRing, { scale: 1, borderColor: "rgba(255,255,255,0.4)", duration: 0.3 });
+            });
+
+            // Mobile/Tablet Touch Events
+            btn.addEventListener('touchstart', (e) => {
+                gsap.to(btn, { scale: 0.95, duration: 0.2 });
+            });
+
+            btn.addEventListener('touchend', (e) => {
+                gsap.to(btn, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.3)" });
             });
         });
 

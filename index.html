@@ -1,528 +1,298 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vibhansh — Social Admit Card 2026</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibhansh - Showreel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      background: #9BAABA;
-      background-image:
-        linear-gradient(45deg, rgba(0,0,0,0.03) 25%, transparent 25%),
-        linear-gradient(-45deg, rgba(0,0,0,0.03) 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, rgba(0,0,0,0.03) 75%),
-        linear-gradient(-45deg, transparent 75%, rgba(0,0,0,0.03) 75%);
-      background-size: 6px 6px;
-      min-height: 100vh;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 32px 16px 48px;
-      font-family: 'Courier Prime', monospace;
-    }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-    .admit-card {
-      background: #F8F9FF;
-      width: 100%;
-      max-width: 660px;
-      /* Classic double-rule government border */
-      border: 2px solid #1B3869;
-      box-shadow:
-        0 0 0 5px #F8F9FF,
-        0 0 0 7px #1B3869,
-        0 16px 48px rgba(0,0,0,0.3);
-      position: relative;
-    }
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
 
-    /* Ghost watermark */
-    .card-bg-text {
-      position: absolute;
-      top: 52%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-30deg);
-      font-family: 'Special Elite', cursive;
-      font-size: clamp(60px, 16vw, 100px);
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(27, 56, 105, 0.06);
-      white-space: nowrap;
-      pointer-events: none;
-      user-select: none;
-      z-index: 0;
-      letter-spacing: 0.1em;
-    }
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-    .card-inner { position: relative; z-index: 1; }
+        .hero p {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            color: #888;
+            max-width: 600px;
+            line-height: 1.6;
+        }
 
-    /* ── HEADER ── */
-    .card-header {
-      background: #1B3869;
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            animation: bounce 2s infinite;
+        }
 
-    .logo-ring {
-      width: 46px; height: 46px;
-      border: 2px solid rgba(255,255,255,0.35);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .logo-ring-inner {
-      width: 33px; height: 33px;
-      border: 1.5px solid rgba(255,255,255,0.55);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 700;
-      color: white; letter-spacing: 0.04em;
-    }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
 
-    .header-text { flex: 1; }
-    .org-name {
-      font-size: 8px; letter-spacing: 0.22em;
-      text-transform: uppercase; color: rgba(255,255,255,0.6);
-      margin-bottom: 3px;
-    }
-    .doc-title {
-      font-size: clamp(15px, 3.5vw, 19px);
-      font-weight: 700; color: white;
-      letter-spacing: 0.1em; text-transform: uppercase;
-    }
-    .doc-sub {
-      font-size: 9px; color: rgba(255,255,255,0.55);
-      letter-spacing: 0.14em; margin-top: 2px;
-    }
-    .year-badge {
-      border: 1px solid rgba(255,255,255,0.3);
-      background: rgba(255,255,255,0.1);
-      color: white; font-size: 10px;
-      padding: 4px 10px; letter-spacing: 0.14em;
-      flex-shrink: 0;
-    }
+        /* Find Me Section */
+        .find-me {
+            padding: 6rem 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-    /* ── THIN STRIP ── */
-    .info-strip {
-      background: #2C5899;
-      padding: 5px 20px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 4px;
-    }
-    .strip-item {
-      font-size: 8.5px; color: rgba(255,255,255,0.75);
-      letter-spacing: 0.14em; text-transform: uppercase;
-    }
+        .find-me h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            letter-spacing: -0.02em;
+        }
 
-    /* ── CANDIDATE ROW ── */
-    .candidate-section {
-      padding: 18px 20px 14px;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 18px;
-      align-items: start;
-    }
+        .find-me h2 span {
+            color: #c9a227;
+        }
 
-    .photo-box {
-      width: 90px; height: 110px;
-      border: 1.5px solid #1B3869;
-      background: #E8EEF8;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      flex-shrink: 0; position: relative;
-      overflow: hidden;
-    }
-    .photo-box::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        -45deg,
-        transparent, transparent 4px,
-        rgba(27,56,105,0.04) 4px, rgba(27,56,105,0.04) 5px
-      );
-    }
-    .photo-initials {
-      font-size: 30px; font-weight: 700;
-      color: #1B3869; position: relative; z-index: 1;
-      letter-spacing: -0.02em;
-    }
-    .photo-label {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      background: #1B3869; color: white;
-      font-size: 7px; letter-spacing: 0.14em;
-      text-align: center; padding: 3px 0;
-      text-transform: uppercase;
-    }
-    /* Corner marks */
-    .photo-box::after {
-      content: '';
-      position: absolute; top: 4px; right: 4px;
-      width: 8px; height: 8px;
-      border-top: 1.5px solid #1B3869;
-      border-right: 1.5px solid #1B3869;
-    }
+        /* Contact Cards - Flex Column Layout */
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
 
-    .details-table {
-      width: 100%; border-collapse: collapse;
-    }
-    .details-table tr {
-      border-bottom: 1px dashed #C8D3E8;
-    }
-    .details-table tr:last-child { border-bottom: none; }
-    .details-table td { padding: 5px 0; vertical-align: top; }
-    .td-label {
-      font-size: 9px; letter-spacing: 0.1em;
-      text-transform: uppercase; color: #6879A0;
-      width: 44%; padding-right: 6px; white-space: nowrap;
-    }
-    .td-colon { color: #6879A0; padding: 0 5px; font-size: 10px; }
-    .td-value {
-      font-size: 11.5px; font-weight: 700;
-      color: #111827; letter-spacing: 0.02em;
-    }
+        .contact-card {
+            display: flex;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            text-decoration: none;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
 
-    /* ── STAMP (absolute positioned) ── */
-    .stamp-wrap {
-      position: absolute;
-      right: 20px;
-      bottom: 220px;
-      transform: rotate(-11deg);
-      pointer-events: none;
-    }
-    .stamp-box {
-      border: 2.5px solid rgba(185, 28, 28, 0.7);
-      padding: 5px 9px;
-    }
-    .stamp-main {
-      font-family: 'Special Elite', cursive;
-      font-size: 14px; font-weight: 700;
-      color: rgba(185, 28, 28, 0.7);
-      letter-spacing: 0.15em; text-transform: uppercase;
-      display: block; line-height: 1.3;
-    }
-    .stamp-small {
-      font-family: 'Special Elite', cursive;
-      font-size: 7px;
-      color: rgba(185, 28, 28, 0.55);
-      letter-spacing: 0.22em; text-transform: uppercase;
-      display: block; text-align: center; margin-top: 1px;
-    }
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #c9a227;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+            border-radius: 16px 0 0 16px;
+        }
 
-    /* ── SECTION HEAD ── */
-    .section-bar {
-      background: #1B3869;
-      color: white;
-      font-size: 8.5px; font-weight: 700;
-      letter-spacing: 0.26em; text-transform: uppercase;
-      padding: 6px 20px;
-      display: flex; align-items: center; gap: 10px;
-    }
-    .section-bar::before, .section-bar::after {
-      content: '◆'; font-size: 5px; opacity: 0.5;
-    }
+        .contact-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(4px);
+        }
 
-    /* ── LINKS ── */
-    .links-wrap { padding: 0 20px; }
+        .contact-card:hover::before {
+            transform: scaleY(1);
+        }
 
-    .link-entry {
-      display: grid;
-      grid-template-columns: 20px 1fr auto;
-      align-items: center; gap: 12px;
-      padding: 9px 0;
-      border-bottom: 1px dashed #C8D3E8;
-      text-decoration: none; color: inherit;
-      transition: background 0.12s, padding 0.12s;
-    }
-    .link-entry:last-child { border-bottom: none; }
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(201, 162, 39, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            font-size: 1.25rem;
+        }
 
-    .link-entry:hover {
-      background: #EEF3FF;
-      margin: 0 -20px;
-      padding: 9px 20px;
-    }
+        .card-info {
+            flex: 1;
+            min-width: 0;
+        }
 
-    .omr-bubble {
-      width: 17px; height: 17px;
-      border: 1.5px solid #1B3869;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; transition: background 0.12s;
-    }
-    .omr-fill {
-      width: 8px; height: 8px;
-      border-radius: 50%; background: #1B3869;
-      transition: background 0.12s;
-    }
-    .link-entry:hover .omr-bubble { background: #1B3869; }
-    .link-entry:hover .omr-fill   { background: white; }
+        .card-info h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
 
-    .link-meta { display: flex; flex-direction: column; gap: 1px; }
-    .link-name {
-      font-size: 11.5px; font-weight: 700;
-      color: #111827; letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-    .link-desc {
-      font-size: 9px; color: #6879A0; letter-spacing: 0.07em;
-    }
-    .link-action {
-      font-size: 9px; font-weight: 700;
-      color: #2C5899; letter-spacing: 0.1em;
-      white-space: nowrap;
-    }
+        .card-info p {
+            font-size: 0.875rem;
+            color: #888;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
 
-    /* ── INSTRUCTIONS ── */
-    .instructions-wrap {
-      padding: 13px 20px 10px;
-      border-top: 1.5px solid #C8D3E8;
-    }
-    .inst-head {
-      font-size: 8.5px; font-weight: 700;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: #1B3869; margin-bottom: 8px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .inst-head::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, #C8D3E8, transparent);
-    }
-    .inst-list { list-style: none; }
-    .inst-list li {
-      font-size: 9px; color: #6879A0;
-      padding: 2px 0 2px 16px;
-      position: relative; line-height: 1.5;
-    }
-    .inst-list li::before {
-      content: attr(data-n) ".";
-      position: absolute; left: 0;
-      font-weight: 700; color: #1B3869;
-    }
+        .card-arrow {
+            margin-left: 1rem;
+            color: #888;
+            transition: color 0.3s ease, transform 0.3s ease;
+            flex-shrink: 0;
+        }
 
-    /* ── BARCODE ROW ── */
-    .barcode-row {
-      display: flex; align-items: center;
-      justify-content: space-between;
-      padding: 10px 20px;
-      background: white;
-      border-top: 1.5px solid #C8D3E8;
-    }
-    .barcode {
-      display: flex; align-items: flex-end;
-      gap: 1.5px; height: 26px;
-    }
-    .barcode span {
-      background: #1B3869; border-radius: 0.5px;
-      width: 2px;
-    }
-    .barcode-id {
-      font-size: 8px; color: #8899BB; letter-spacing: 0.08em;
-    }
-    .bc-right {
-      font-size: 8.5px; color: #8899BB; letter-spacing: 0.06em;
-      font-style: italic;
-    }
+        .contact-card:hover .card-arrow {
+            color: #c9a227;
+            transform: translateX(4px);
+        }
 
-    /* ── DISCLAIMER ── */
-    .disclaimer {
-      background: #EEF3FF;
-      border-top: 1px solid #C8D3E8;
-      padding: 8px 20px;
-      font-size: 7.5px; color: #8899BB;
-      letter-spacing: 0.1em; text-align: center;
-      text-transform: uppercase;
-    }
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            color: #555;
+            font-size: 0.875rem;
+        }
 
-    /* ── MOBILE ── */
-    @media (max-width: 480px) {
-      body { padding: 20px 10px 40px; }
-      .candidate-section {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-      .photo-box { width: 76px; height: 94px; margin: 0 auto; }
-      .stamp-wrap { display: none; }
-      .info-strip { flex-direction: column; gap: 2px; }
-    }
-  </style>
+        /* Responsive */
+        @media (max-width: 480px) {
+            .contact-card {
+                padding: 1rem;
+            }
+
+            .card-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .card-info h3 {
+                font-size: 0.9375rem;
+            }
+
+            .card-info p {
+                font-size: 0.8125rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div class="admit-card">
-  <div class="card-bg-text">ADMIT CARD</div>
-
-  <div class="card-inner">
-
-    <!-- HEADER -->
-    <div class="card-header">
-      <div class="logo-ring">
-        <div class="logo-ring-inner">NSA</div>
-      </div>
-      <div class="header-text">
-        <div class="org-name">National Social Authority · Govt. of the Internet</div>
-        <div class="doc-title">Social Admit Card</div>
-        <div class="doc-sub">Credentials Verified for Online Presence · Cycle 2026</div>
-      </div>
-      <div class="year-badge">2026</div>
-    </div>
-
-    <div class="info-strip">
-      <span class="strip-item">Roll No: vibhansh19</span>
-      <span class="strip-item">Category: Gen-Z Builder</span>
-      <span class="strip-item">Medium: Hindi + English + Code</span>
-      <span class="strip-item">Status: Active ●</span>
-    </div>
-
-    <!-- CANDIDATE -->
-    <div class="candidate-section">
-      <div class="photo-box">
-        <div class="photo-initials">VB</div>
-        <div class="photo-label">Photograph</div>
-      </div>
-
-      <table class="details-table">
-        <tr>
-          <td class="td-label">Candidate Name</td>
-          <td class="td-colon">:</td>
-          <td class="td-value">VIBHANSH</td>
-        </tr>
-        <tr>
-          <td class="td-label">City / State</td>
-          <td class="td-colon">:</td>
-          <td class="td-value">Ajmer, Rajasthan</td>
-        </tr>
-        <tr>
-          <td class="td-label">Expertise</td>
-          <td class="td-colon">:</td>
-          <td class="td-value">Full-Stack + Hardware</td>
-        </tr>
-        <tr>
-          <td class="td-label">Appearing For</td>
-          <td class="td-colon">:</td>
-          <td class="td-value">NEET UG 2026 + Life</td>
-        </tr>
-        <tr>
-          <td class="td-label">Report To</td>
-          <td class="td-colon">:</td>
-          <td class="td-value">Links Below ↓</td>
-        </tr>
-      </table>
-    </div>
-
-    <!-- STAMP -->
-    <div class="stamp-wrap">
-      <div class="stamp-box">
-        <span class="stamp-main">Verified</span>
-        <span class="stamp-small">By Self · 2026</span>
-      </div>
-    </div>
-
-    <!-- LINKS -->
-    <div class="section-bar">Reporting Links</div>
-
-    <div class="links-wrap">
-
-      <a class="link-entry" href="https://www.instagram.com/vibhansh_04/" target="_blank" rel="noopener">
-        <div class="omr-bubble"><div class="omr-fill"></div></div>
-        <div class="link-meta">
-          <span class="link-name">Instagram</span>
-          <span class="link-desc">@vibhansh_04 &nbsp;·&nbsp; personal feed &amp; updates</span>
+    <section class="hero">
+        <h1>Vibhansh</h1>
+        <p>Creative Developer & Designer crafting digital experiences that leave a lasting impression.</p>
+        <div class="scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12l7 7 7-7"/>
+            </svg>
         </div>
-        <span class="link-action">OPEN ↗</span>
-      </a>
+    </section>
 
-      <a class="link-entry" href="https://github.com/vibhansh19" target="_blank" rel="noopener">
-        <div class="omr-bubble"><div class="omr-fill"></div></div>
-        <div class="link-meta">
-          <span class="link-name">GitHub</span>
-          <span class="link-desc">vibhansh19 &nbsp;·&nbsp; code, builds &amp; experiments</span>
+    <section class="find-me">
+        <h2>Find <span>Me</span></h2>
+        <div class="contact-list">
+
+            <a href="https://instagram.com/vibhansh_04" target="_blank" class="contact-card">
+                <div class="card-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                </div>
+                <div class="card-info">
+                    <h3>Instagram</h3>
+                    <p>@vibhansh_04</p>
+                </div>
+                <div class="card-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </div>
+            </a>
+
+            <a href="https://github.com/vibhansh19" target="_blank" class="contact-card">
+                <div class="card-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                    </svg>
+                </div>
+                <div class="card-info">
+                    <h3>Github</h3>
+                    <p>vibhansh19</p>
+                </div>
+                <div class="card-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </div>
+            </a>
+
+            <a href="#" onclick="alert('Discord: Add me directly!')" class="contact-card">
+                <div class="card-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                    </svg>
+                </div>
+                <div class="card-info">
+                    <h3>Discord</h3>
+                    <p>Message Directly</p>
+                </div>
+                <div class="card-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </div>
+            </a>
+
+            <a href="mailto:vvibhansh@gmail.com" class="contact-card">
+                <div class="card-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                </div>
+                <div class="card-info">
+                    <h3>Email</h3>
+                    <p>vvibhansh@gmail.com</p>
+                </div>
+                <div class="card-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </div>
+            </a>
+
         </div>
-        <span class="link-action">OPEN ↗</span>
-      </a>
+    </section>
 
-      <a class="link-entry" href="https://discord.com/users/1447527365277384786" target="_blank" rel="noopener">
-        <div class="omr-bubble"><div class="omr-fill"></div></div>
-        <div class="link-meta">
-          <span class="link-name">Discord</span>
-          <span class="link-desc">direct message &nbsp;·&nbsp; fastest response</span>
-        </div>
-        <span class="link-action">OPEN ↗</span>
-      </a>
-
-      <a class="link-entry" href="https://portfoliovibhansh.vercel.app/" target="_blank" rel="noopener">
-        <div class="omr-bubble"><div class="omr-fill"></div></div>
-        <div class="link-meta">
-          <span class="link-name">Portfolio</span>
-          <span class="link-desc">projects, startups &amp; hardware builds</span>
-        </div>
-        <span class="link-action">OPEN ↗</span>
-      </a>
-
-      <a class="link-entry" href="mailto:vvibhansh@gmail.com">
-        <div class="omr-bubble"><div class="omr-fill"></div></div>
-        <div class="link-meta">
-          <span class="link-name">Email</span>
-          <span class="link-desc">vvibhansh@gmail.com &nbsp;·&nbsp; say hello</span>
-        </div>
-        <span class="link-action">OPEN ↗</span>
-      </a>
-
-    </div>
-
-    <!-- INSTRUCTIONS -->
-    <div class="instructions-wrap">
-      <div class="inst-head">Important Instructions for Visitor</div>
-      <ul class="inst-list">
-        <li data-n="1">Candidate shall carry genuine curiosity before reaching out. Spam strictly prohibited.</li>
-        <li data-n="2">Electronic devices permitted. Clicking links above is encouraged and expected.</li>
-        <li data-n="3">No biometric verification required — just say hi.</li>
-        <li data-n="4">This admit card is valid for an indefinite period until further notification.</li>
-      </ul>
-    </div>
-
-    <!-- BARCODE -->
-    <div class="barcode-row">
-      <div class="barcode">
-        <span style="height:100%"></span>
-        <span style="height:55%;width:1px"></span>
-        <span style="height:100%"></span>
-        <span style="height:75%"></span>
-        <span style="height:100%;width:3px"></span>
-        <span style="height:45%"></span>
-        <span style="height:100%"></span>
-        <span style="height:85%"></span>
-        <span style="height:100%;width:1px"></span>
-        <span style="height:60%;width:3px"></span>
-        <span style="height:100%"></span>
-        <span style="height:70%"></span>
-        <span style="height:100%;width:1px"></span>
-        <span style="height:50%"></span>
-        <span style="height:100%;width:3px"></span>
-        <span style="height:90%"></span>
-        <span style="height:100%"></span>
-        <span style="height:65%;width:1px"></span>
-        <span style="height:100%;width:3px"></span>
-        <span style="height:55%"></span>
-        <span style="height:100%"></span>
-        <span style="height:80%"></span>
-      </div>
-      <div class="barcode-id">VIB2026AJMERNEET</div>
-      <div class="bc-right">© Vibhansh 2026</div>
-    </div>
-
-    <div class="disclaimer">
-      This is a creative social page &nbsp;·&nbsp; Not an official government document &nbsp;·&nbsp; Made with intent by Vibhansh
-    </div>
-
-  </div>
-</div>
+    <footer>
+        <p>Made with passion by Vibhansh</p>
+    </footer>
 
 </body>
-</html>
+  </html>
+  

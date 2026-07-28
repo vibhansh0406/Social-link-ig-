@@ -116,10 +116,35 @@
     font-family: var(--font-b); font-size: 11px; font-weight: 500;
     letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--text-dark);
-    mix-blend-mode: difference;
+
+    /* Glassmorphism Effect */
+    background: rgba(9, 9, 9, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background 1.5s ease-in-out, border-color 1.5s ease-in-out, color 1.5s ease-in-out;
   }
-  .bar-top { top: 0; }
-  .bar-bottom { bottom: 0; }
+
+  body.light-mode .bar {
+    background: rgba(235, 235, 235, 0.4);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    color: var(--text-light);
+  }
+
+  .bar-top {
+    top: 0;
+  }
+
+  .bar-bottom {
+    bottom: 0;
+    border-bottom: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  body.light-mode .bar-bottom {
+    border-bottom: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+  }
   .bar-label { display: flex; align-items: center; gap: 12px; }
   .nav-menu { display: flex; gap: 32px; }
   .nav-menu a {

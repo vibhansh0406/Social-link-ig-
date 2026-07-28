@@ -12,6 +12,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
 <script src="https://unpkg.com/split-type"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
 <style>
   :root {
     --bg-dark: #090909;
@@ -236,6 +239,16 @@
   .work-item:hover::before { height: 100%; }
 
   .work-item-left { display: flex; align-items: baseline; gap: clamp(24px, 4vw, 60px); }
+  .work-details { display: flex; flex-direction: column; gap: 8px; }
+  .work-desc { font-family: var(--font-b); font-size: clamp(14px, 1.2vw, 18px); color: rgba(255, 255, 255, 0.7); max-width: 600px; font-weight: 400; line-height: 1.4; transition: color 0.5s ease; }
+  .light-mode .work-desc { color: rgba(17, 17, 17, 0.7); }
+  .work-item:hover .work-desc { color: var(--bg-dark); }
+  .light-mode .work-item:hover .work-desc { color: var(--bg-light); }
+  .work-item:hover .work-details { transform: translateX(20px) skewX(-2deg); transition: transform 0.5s cubic-bezier(0.19,1,0.22,1); }
+  .work-details { transition: transform 0.5s cubic-bezier(0.19,1,0.22,1); }
+  /* Override older work-name hover logic so it applies to parent instead */
+  .work-item:hover .work-name { transform: none; }
+
   .work-idx {
     font-family: var(--font-b); font-size: 14px; font-weight: 400;
     color: var(--text-muted-dark);
@@ -283,6 +296,27 @@
     font-size: clamp(18px, 2vw, 28px); color: var(--text-muted-dark);
   }
   .contact-cta em { font-family: var(--font-b); font-style: normal; color: var(--text-dark); }
+
+
+  #webgl-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2; /* Behind everything */
+    pointer-events: none;
+  }
+
+  /* Make sure body and main have transparent backgrounds so we can see the canvas */
+  body, main {
+    background: transparent !important;
+  }
+
+  /* Adjust transition since background color will now be handled by WebGL */
+  body {
+    transition: color 0.8s ease;
+  }
 
   /* --- Enhancements --- */
   :root {
@@ -412,9 +446,72 @@
     transform-origin: bottom center;
   }
 
+
+  .hero-name {
+    font-size: clamp(4rem, 15vw, 15rem);
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    font-weight: 800;
+  }
+  .identity-name {
+    font-size: clamp(3rem, 12vw, 12rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    font-weight: 700;
+  }
+  .contact-title {
+    font-size: clamp(3rem, 14vw, 14rem);
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    font-family: var(--font-i);
+    font-style: italic;
+  }
+
+  .hero-sub, .identity-bio {
+    font-size: clamp(1.2rem, 3vw, 2.5rem);
+    max-width: 80%;
+    margin-top: 2rem;
+    line-height: 1.4;
+  }
+
+  .work-name {
+    font-size: clamp(2rem, 6vw, 6rem);
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+
+  .work-item {
+    padding: 3rem 0;
+  }
+
+  .works-header {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    margin-bottom: 3rem;
+  }
+
+  .scene {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10vh 5vw;
+  }
+
+  .hero-wrap, .s2-wrapper, .contact-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  em {
+    font-size: 1.1em;
+  }
+
 </style>
 </head>
 <body>
+<canvas id="webgl-canvas"></canvas>
+
 
 <div class="loader" id="loader">
   <div class="loader-bar"></div>
@@ -475,35 +572,50 @@
       <a href="#" class="work-item" data-img="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1000&auto=format&fit=crop">
         <div class="work-item-left">
           <span class="work-idx">01</span>
-          <h3 class="work-name">VEDA-8B-V1</h3>
+          <div class="work-details">
+            <h3 class="work-name">VEDA-8B-V1</h3>
+            <p class="work-desc">8B-parameter model, quantized to IQ4_XS and shipped on Hugging Face.</p>
+          </div>
         </div>
         <p class="work-cat">Model Training</p>
       </a>
       <a href="#" class="work-item" data-img="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1000&auto=format&fit=crop">
         <div class="work-item-left">
           <span class="work-idx">02</span>
-          <h3 class="work-name">Marwari-Hindi LLM</h3>
+          <div class="work-details">
+            <h3 class="work-name">Marwari-Hindi LLM</h3>
+            <p class="work-desc">Gemma fine-tuned on Marwari-Rajasthani text with QLoRA, on free Kaggle T4s.</p>
+          </div>
         </div>
         <p class="work-cat">Regional AI</p>
       </a>
       <a href="#" class="work-item" data-img="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1000&auto=format&fit=crop">
         <div class="work-item-left">
           <span class="work-idx">03</span>
-          <h3 class="work-name">Telegram AI</h3>
+          <div class="work-details">
+            <h3 class="work-name">Telegram AI Assistant</h3>
+            <p class="work-desc">Multi-provider fallback — Gemini to Groq to OpenRouter — with persistent memory.</p>
+          </div>
         </div>
         <p class="work-cat">Agent Systems</p>
       </a>
       <a href="#" class="work-item" data-img="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1000&auto=format&fit=crop">
         <div class="work-item-left">
           <span class="work-idx">04</span>
-          <h3 class="work-name">MCP Lead Scraper</h3>
+          <div class="work-details">
+            <h3 class="work-name">MCP Lead Scraper</h3>
+            <p class="work-desc">An MCP server that finds and scores local business leads automatically.</p>
+          </div>
         </div>
         <p class="work-cat">Data Engine</p>
       </a>
       <a href="#" class="work-item" data-img="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1000&auto=format&fit=crop">
         <div class="work-item-left">
           <span class="work-idx">05</span>
-          <h3 class="work-name">Piezo Energy Bench</h3>
+          <div class="work-details">
+            <h3 class="work-name">Piezo Energy Bench</h3>
+            <p class="work-desc">Measures energy harvested from motion through an LTC3588 circuit.</p>
+          </div>
         </div>
         <p class="work-cat">Hardware</p>
       </a>
@@ -585,6 +697,197 @@
     new SplitType(el, { types: 'lines, words', lineClass: 'split-line', wordClass: 'word' });
   });
 
+
+  // Initialize Lenis for smooth scrolling
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+    direction: 'vertical',
+    gestureDirection: 'vertical',
+    smooth: true,
+    mouseMultiplier: 1,
+    smoothTouch: false,
+    touchMultiplier: 2,
+    infinite: false,
+  })
+
+  // get scroll value
+  let scrollY = 0;
+  lenis.on('scroll', (e) => {
+    scrollY = window.scrollY;
+  })
+
+  function raf(time) {
+    lenis.raf(time)
+    requestAnimationFrame(raf)
+  }
+
+  requestAnimationFrame(raf)
+
+  // Sync GSAP ScrollTrigger with Lenis
+  lenis.on('scroll', ScrollTrigger.update)
+
+  gsap.ticker.add((time)=>{
+    lenis.raf(time * 1000)
+  })
+
+  gsap.ticker.lagSmoothing(0)
+
+  // Three.js Background Implementation
+  const canvas = document.getElementById('webgl-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+  // Custom Shader for Fluid/Wave background
+  const vertexShader = `
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = vec4(position, 1.0);
+    }
+  `;
+
+  const fragmentShader = `
+    uniform float uTime;
+    uniform vec2 uResolution;
+    uniform vec2 uMouse;
+    uniform float uScroll;
+
+    // Theme colors
+    uniform vec3 uColor1;
+    uniform vec3 uColor2;
+    uniform vec3 uColor3;
+
+    varying vec2 vUv;
+
+    // Simplex 2D noise
+    vec3 permute(vec3 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
+    float snoise(vec2 v){
+      const vec4 C = vec4(0.211324865405187, 0.366025403784439,
+               -0.577350269189626, 0.024390243902439);
+      vec2 i  = floor(v + dot(v, C.yy) );
+      vec2 x0 = v -   i + dot(i, C.xx);
+      vec2 i1;
+      i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+      vec4 x12 = x0.xyxy + C.xxzz;
+      x12.xy -= i1;
+      i = mod(i, 289.0);
+      vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
+      + i.x + vec3(0.0, i1.x, 1.0 ));
+      vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy),
+        dot(x12.zw,x12.zw)), 0.0);
+      m = m*m ;
+      m = m*m ;
+      vec3 x = 2.0 * fract(p * C.www) - 1.0;
+      vec3 h = abs(x) - 0.5;
+      vec3 ox = floor(x + 0.5);
+      vec3 a0 = x - ox;
+      m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+      vec3 g;
+      g.x  = a0.x  * x0.x  + h.x  * x0.y;
+      g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+      return 130.0 * dot(m, g);
+    }
+
+    void main() {
+      vec2 st = gl_FragCoord.xy/uResolution.xy;
+      st.x *= uResolution.x/uResolution.y;
+
+      // Affect coordinates by mouse and scroll
+      vec2 pos = st;
+      pos.y += uScroll * 0.001;
+
+      // Distortion based on noise
+      float n = snoise(pos * 3.0 + uTime * 0.2);
+      float n2 = snoise(pos * 2.0 - uTime * 0.15 + uMouse * 0.5);
+      float n3 = snoise(pos * 5.0 + uTime * 0.1 - uMouse * 0.2);
+
+      float noiseVal = n * 0.5 + n2 * 0.3 + n3 * 0.2;
+
+      // Mix colors based on noise
+      vec3 color = mix(uColor1, uColor2, smoothstep(-1.0, 1.0, noiseVal));
+      color = mix(color, uColor3, smoothstep(0.0, 1.0, n2));
+
+      // Add subtle vignette
+      vec2 q = gl_FragCoord.xy / uResolution.xy;
+      float vignette = 1.0 - 0.5 * dot(q - 0.5, q - 0.5);
+
+      gl_FragColor = vec4(color * vignette, 1.0);
+    }
+  `;
+
+  // Dark Theme Colors
+  const darkC1 = new THREE.Color("#090909");
+  const darkC2 = new THREE.Color("#1a1a1a");
+  const darkC3 = new THREE.Color("#331000"); // dark accent
+
+  // Light Theme Colors
+  const lightC1 = new THREE.Color("#EBEBEB");
+  const lightC2 = new THREE.Color("#d1d1d1");
+  const lightC3 = new THREE.Color("#ffcca3"); // light accent
+
+  const uniforms = {
+    uTime: { value: 0 },
+    uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+    uMouse: { value: new THREE.Vector2(0, 0) },
+    uScroll: { value: 0 },
+    uColor1: { value: darkC1.clone() },
+    uColor2: { value: darkC2.clone() },
+    uColor3: { value: darkC3.clone() }
+  };
+
+  const material = new THREE.ShaderMaterial({
+    vertexShader,
+    fragmentShader,
+    uniforms
+  });
+
+  const geometry = new THREE.PlaneGeometry(2, 2);
+  const mesh = new THREE.Mesh(geometry, material);
+  scene.add(mesh);
+
+  // Mouse interaction for WebGL
+  let mouseX = 0;
+  let mouseY = 0;
+  let targetMouseX = 0;
+  let targetMouseY = 0;
+
+  window.addEventListener('mousemove', (e) => {
+    targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
+    targetMouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+  });
+
+  // Handle Resize
+  window.addEventListener('resize', () => {
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    uniforms.uResolution.value.set(window.innerWidth, window.innerHeight);
+  });
+
+  // Animation Loop
+  const clock = new THREE.Clock();
+
+  function animateWebGL() {
+    const elapsedTime = clock.getElapsedTime();
+    uniforms.uTime.value = elapsedTime;
+
+    // Smooth mouse interpolation
+    mouseX += (targetMouseX - mouseX) * 0.05;
+    mouseY += (targetMouseY - mouseY) * 0.05;
+    uniforms.uMouse.value.set(mouseX, mouseY);
+
+    // Scroll interaction
+    uniforms.uScroll.value += (scrollY - uniforms.uScroll.value) * 0.1;
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(animateWebGL);
+  }
+
+  animateWebGL();
+
   // Animations Setup
 
   // Work items image reveal
@@ -646,7 +949,7 @@
   const scenes = document.querySelectorAll('.scene');
   scenes.forEach(scene => {
     const theme = scene.dataset.theme;
-    
+
     // Theme Switcher
     ScrollTrigger.create({
       trigger: scene,
@@ -656,7 +959,7 @@
       onEnterBack: () => updateTheme(theme, scene)
     });
 
-    
+
     // Content Reveal (Enhanced)
     if(scene.id !== 's1') {
       const words = scene.querySelectorAll('.word');
@@ -685,12 +988,21 @@
   function updateTheme(theme, scene) {
     if(theme === 'light') {
       body.classList.add('light-mode');
-      body.style.background = 'var(--bg-light)';
       body.style.color = 'var(--text-light)';
+
+      // Animate WebGL Colors to Light
+      gsap.to(uniforms.uColor1.value, { r: lightC1.r, g: lightC1.g, b: lightC1.b, duration: 1.5, ease: "power2.inOut" });
+      gsap.to(uniforms.uColor2.value, { r: lightC2.r, g: lightC2.g, b: lightC2.b, duration: 1.5, ease: "power2.inOut" });
+      gsap.to(uniforms.uColor3.value, { r: lightC3.r, g: lightC3.g, b: lightC3.b, duration: 1.5, ease: "power2.inOut" });
+
     } else {
       body.classList.remove('light-mode');
-      body.style.background = 'var(--bg-dark)';
       body.style.color = 'var(--text-dark)';
+
+      // Animate WebGL Colors to Dark
+      gsap.to(uniforms.uColor1.value, { r: darkC1.r, g: darkC1.g, b: darkC1.b, duration: 1.5, ease: "power2.inOut" });
+      gsap.to(uniforms.uColor2.value, { r: darkC2.r, g: darkC2.g, b: darkC2.b, duration: 1.5, ease: "power2.inOut" });
+      gsap.to(uniforms.uColor3.value, { r: darkC3.r, g: darkC3.g, b: darkC3.b, duration: 1.5, ease: "power2.inOut" });
     }
     ind.textContent = scene.dataset.sc;
   }

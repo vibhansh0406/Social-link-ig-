@@ -194,12 +194,7 @@
     letter-spacing: 0.2em; text-transform: uppercase;
     margin-bottom: var(--space-md); color: var(--text-muted-dark);
   }
-  .hero-name {
-    font-family: 'NeueMontreal', var(--font-h); font-weight: 700;
-    font-size: clamp(3rem, 10vw, 15rem); line-height: 0.85;
-    letter-spacing: -0.05em; margin-bottom: var(--space-lg);
-    text-transform: uppercase;
-  }
+  .hero-name { font-family: var(--font-h); font-weight: 500; font-size: clamp(2rem, 8vw, 8rem); line-height: 1; letter-spacing: -0.02em; margin-bottom: var(--space-md); text-transform: uppercase; word-wrap: break-word; overflow-wrap: break-word; text-align: left; max-width: 100%; }
   .hero-sub {
     font-family: var(--font-b); font-size: clamp(16px, 1.5vw, 20px);
     color: var(--text-muted-dark); max-width: 500px; line-height: 1.5;
@@ -224,11 +219,7 @@
     letter-spacing: 0.2em; text-transform: uppercase; color: inherit;
     opacity: 0.5;
   }
-  .identity-name {
-    font-family: 'EditorialNew', var(--font-i); font-style: italic; font-weight: 300;
-    font-size: clamp(2.5rem, 6vw, 8rem); line-height: 0.9;
-    letter-spacing: -0.02em; color: inherit; padding-bottom: 20px;
-  }
+  .identity-name { font-family: var(--font-i); font-style: italic; font-weight: 400; font-size: clamp(2rem, 5vw, 6rem); line-height: 1.1; letter-spacing: -0.01em; color: inherit; padding-bottom: 20px; word-wrap: break-word; overflow-wrap: break-word; }
   .identity-bio {
     font-family: var(--font-b); font-size: clamp(18px, 2vw, 32px);
     max-width: 800px; line-height: 1.4; color: inherit; margin-top: var(--space-lg);
@@ -236,11 +227,7 @@
   .identity-bio em { font-family: var(--font-i); font-style: italic; font-weight: 400; }
 
   /* Section 3 - Works */
-  .works-header {
-    font-family: var(--font-b); font-size: 12px; font-weight: 500;
-    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: var(--space-xl);
-    color: var(--text-muted-dark);
-  }
+    .works-header { font-size: clamp(0.75rem, 1.5vw, 1rem); text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 2rem; color: inherit; opacity: 0.6; font-family: var(--font-b); }
   .work-list { width: 100%; border-top: 1px solid var(--border-dark); }
   .work-item {
     display: flex; align-items: center; justify-content: space-between;
@@ -262,11 +249,7 @@
     font-family: var(--font-b); font-size: 14px; font-weight: 400;
     color: var(--text-muted-dark);
   }
-  .work-name {
-    font-family: var(--font-h); font-weight: 600;
-    font-size: clamp(1.5rem, 4vw, 3.5rem); letter-spacing: -0.02em;
-    text-transform: uppercase;
-  }
+  .work-name { font-family: var(--font-h); font-weight: 500; font-size: clamp(1.2rem, 2.5vw, 2.5rem); letter-spacing: -0.01em; text-transform: uppercase; transition: color 0.3s ease, transform 0.5s cubic-bezier(0.19,1,0.22,1); }
   .work-cat {
     font-family: var(--font-b); font-size: clamp(12px, 1.2vw, 16px);
     color: var(--text-muted-dark); font-weight: 400;
@@ -280,11 +263,7 @@
   .contact-wrapper {
     display: flex; flex-direction: column; align-items: center; text-align: center;
   }
-  .contact-title {
-    font-family: var(--font-i); font-weight: 700;
-    font-size: clamp(3rem, 10vw, 12rem); line-height: 0.9;
-    letter-spacing: -0.04em; margin-bottom: var(--space-2xl); text-transform: uppercase;
-  }
+  .contact-title { font-family: var(--font-i); font-style: italic; font-weight: 400; font-size: clamp(2.5rem, 7vw, 7rem); line-height: 1; letter-spacing: -0.01em; margin-bottom: var(--space-xl); text-transform: uppercase; word-wrap: break-word; overflow-wrap: break-word; }
   .contact-links {
     display: flex; gap: clamp(24px, 4vw, 60px); flex-wrap: wrap; justify-content: center;
   }
@@ -391,9 +370,7 @@
   }
 
 
-  .work-name {
-    transition: color 0.3s ease, transform 0.5s cubic-bezier(0.19,1,0.22,1);
-  }
+  .work-name { font-family: var(--font-h); font-weight: 500; font-size: clamp(1.2rem, 2.5vw, 2.5rem); letter-spacing: -0.01em; text-transform: uppercase; transition: color 0.3s ease, transform 0.5s cubic-bezier(0.19,1,0.22,1); }
 
   /* Hover Image Reveal */
 
@@ -407,25 +384,9 @@
   }
 
 
-  .hero-name {
-    font-size: clamp(4rem, 15vw, 15rem);
-    line-height: 0.85;
-    letter-spacing: -0.05em;
-    font-weight: 800;
-  }
-  .identity-name {
-    font-size: clamp(3rem, 12vw, 12rem);
-    line-height: 0.9;
-    letter-spacing: -0.04em;
-    font-weight: 700;
-  }
-  .contact-title {
-    font-size: clamp(3rem, 14vw, 14rem);
-    line-height: 0.85;
-    letter-spacing: -0.05em;
-    font-family: var(--font-i);
-    font-style: italic;
-  }
+  .hero-name { font-family: var(--font-h); font-weight: 500; font-size: clamp(2rem, 8vw, 8rem); line-height: 1; letter-spacing: -0.02em; margin-bottom: var(--space-md); text-transform: uppercase; word-wrap: break-word; overflow-wrap: break-word; text-align: left; max-width: 100%; }
+  .identity-name { font-family: var(--font-i); font-style: italic; font-weight: 400; font-size: clamp(2rem, 5vw, 6rem); line-height: 1.1; letter-spacing: -0.01em; color: inherit; padding-bottom: 20px; word-wrap: break-word; overflow-wrap: break-word; }
+  .contact-title { font-family: var(--font-i); font-style: italic; font-weight: 400; font-size: clamp(2.5rem, 7vw, 7rem); line-height: 1; letter-spacing: -0.01em; margin-bottom: var(--space-xl); text-transform: uppercase; word-wrap: break-word; overflow-wrap: break-word; }
 
   .hero-sub, .identity-bio {
     font-size: clamp(1.2rem, 3vw, 2.5rem);
@@ -434,20 +395,13 @@
     line-height: 1.4;
   }
 
-  .work-name {
-    font-size: clamp(2rem, 6vw, 6rem);
-    letter-spacing: -0.02em;
-    font-weight: 600;
-  }
+  .work-name { font-family: var(--font-h); font-weight: 500; font-size: clamp(1.2rem, 2.5vw, 2.5rem); letter-spacing: -0.01em; text-transform: uppercase; transition: color 0.3s ease, transform 0.5s cubic-bezier(0.19,1,0.22,1); }
 
   .work-item {
     padding: 3rem 0;
   }
 
-  .works-header {
-    font-size: clamp(1rem, 2vw, 1.5rem);
-    margin-bottom: 3rem;
-  }
+    .works-header { font-size: clamp(0.75rem, 1.5vw, 1rem); text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 2rem; color: inherit; opacity: 0.6; font-family: var(--font-b); }
 
   .scene {
     min-height: 100vh;

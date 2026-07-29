@@ -230,7 +230,7 @@
     .works-header { font-size: clamp(0.75rem, 1.5vw, 1rem); text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 2rem; color: inherit; opacity: 0.6; font-family: var(--font-b); }
   .work-list { width: 100%; border-top: 1px solid var(--border-dark); }
   .work-item {
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
     padding: clamp(16px, 2vw, 32px) 0;
     border-bottom: 1px solid var(--border-dark);
     text-decoration: none; color: inherit;
@@ -238,7 +238,7 @@
     position: relative; overflow: hidden;
   }
 
-  .work-item-left { display: flex; align-items: baseline; gap: clamp(16px, 3vw, 40px); }
+  .work-item-left { display: flex; align-items: baseline; gap: clamp(16px, 3vw, 40px); flex: 1; min-width: 250px; }
   .work-details { display: flex; flex-direction: column; gap: 8px; }
   .work-desc { font-family: var(--font-b); font-size: clamp(12px, 1vw, 15px); color: rgba(255, 255, 255, 0.7); max-width: 500px; font-weight: 400; line-height: 1.4; transition: color 0.5s ease; }
   .work-desc { color: rgba(17, 17, 17, 0.7); }
@@ -249,7 +249,7 @@
     font-family: var(--font-b); font-size: 14px; font-weight: 400;
     color: var(--text-muted-dark);
   }
-  .work-name { font-family: var(--font-h); font-weight: 500; font-size: clamp(1.2rem, 2.5vw, 2.5rem); letter-spacing: -0.01em; text-transform: uppercase; transition: color 0.3s ease, transform 0.5s cubic-bezier(0.19,1,0.22,1); }
+  .work-name { font-family: var(--font-h); font-weight: 500; font-size: clamp(1rem, 4vw, 2rem); letter-spacing: -0.01em; text-transform: uppercase; transition: color 0.3s ease, transform 0.5s cubic-bezier(0.19,1,0.22,1); word-wrap: break-word; overflow-wrap: break-word; }
   .work-cat {
     font-family: var(--font-b); font-size: clamp(12px, 1.2vw, 16px);
     color: var(--text-muted-dark); font-weight: 400;
@@ -370,7 +370,7 @@
   }
 
 
-  .work-name { font-family: var(--font-h); font-weight: 500; font-size: clamp(1.2rem, 2.5vw, 2.5rem); letter-spacing: -0.01em; text-transform: uppercase; transition: color 0.3s ease, transform 0.5s cubic-bezier(0.19,1,0.22,1); }
+  .work-name { font-family: var(--font-h); font-weight: 500; font-size: clamp(1rem, 4vw, 2rem); letter-spacing: -0.01em; text-transform: uppercase; transition: color 0.3s ease, transform 0.5s cubic-bezier(0.19,1,0.22,1); word-wrap: break-word; overflow-wrap: break-word; }
 
   /* Hover Image Reveal */
 
@@ -395,7 +395,7 @@
     line-height: 1.4;
   }
 
-  .work-name { font-family: var(--font-h); font-weight: 500; font-size: clamp(1.2rem, 2.5vw, 2.5rem); letter-spacing: -0.01em; text-transform: uppercase; transition: color 0.3s ease, transform 0.5s cubic-bezier(0.19,1,0.22,1); }
+  .work-name { font-family: var(--font-h); font-weight: 500; font-size: clamp(1rem, 4vw, 2rem); letter-spacing: -0.01em; text-transform: uppercase; transition: color 0.3s ease, transform 0.5s cubic-bezier(0.19,1,0.22,1); word-wrap: break-word; overflow-wrap: break-word; }
 
   .work-item {
     padding: 3rem 0;

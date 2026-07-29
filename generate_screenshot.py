@@ -6,8 +6,8 @@ with sync_playwright() as p:
     page = browser.new_page()
     file_path = f"file://{os.path.abspath('index.html')}"
     page.goto(file_path)
-    page.wait_for_selector(".bar")
+    page.wait_for_timeout(2500)
 
     os.makedirs("verification", exist_ok=True)
-    page.screenshot(path="verification/final_ui.png", full_page=True)
+    page.screenshot(path="verification/glass_nav.png")
     browser.close()

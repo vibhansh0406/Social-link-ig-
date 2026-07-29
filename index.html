@@ -122,14 +122,24 @@
 
   /* Navigation Bars */
   .bar {
-    position: fixed; left: 0; right: 0; height: var(--bar-h);
+    position: fixed; left: 24px; right: 24px; height: var(--bar-h);
     z-index: 40;
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 clamp(20px, 4vw, 60px);
     font-family: var(--font-b); font-size: 11px; font-weight: 500;
     letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--text-dark);
-    mix-blend-mode: difference;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.8s ease, border-color 0.8s ease, color 0.8s ease;
+  }
+  .light-mode .bar {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--text-light);
   }
   .bar-top { top: 24px; }
   .bar-bottom { bottom: 24px; }
